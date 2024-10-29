@@ -35,7 +35,7 @@ export const setupServer = () => {
     if (contactId.length!==24) {
         return res.status(404).json({
             status: 404,
-            message: 'input must be a 24 character hex string',
+            message: 'Contact ID must be a 24 character hex string',
         });
     }
     const data = await contactServices.getContactById(contactId);
