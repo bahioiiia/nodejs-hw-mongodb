@@ -32,12 +32,18 @@ export const setupServer = () => {
 
     app.get('/contacts/:contactId', async (req, res) => {
     const { contactId } = req.params;
+    if (contactId.length!==24) {
+        return res.status(404).json({
+            status: 404,
+            message: 'input must be a 24 character hex string',
+        });
+    }
     const data = await contactServices.getContactById(contactId);
 
     if (!data) {
         return res.status(404).json({
-        status: 404,
-        message: 'Contact not found',
+            status: 404,
+            message: 'Contact not found',
         });
     }
     res.status(200).json({
