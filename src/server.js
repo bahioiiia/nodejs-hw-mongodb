@@ -29,9 +29,11 @@ export const setupServer = () => {
     });
 
     app.use((error, req, res, next) => {
-    res.status(500).json({
-        message: error.message,
-    });
+        const { status = 500, message = 'Sever ERROR' } = error;
+        res.status(500).json({
+            status,
+            message,
+        });
     });
 
 	const port = Number(env("PORT", 3000));

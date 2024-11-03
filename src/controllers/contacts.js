@@ -1,7 +1,8 @@
+import createHttpError from 'http-errors';
+
 import * as contactServices from '../services/contacts.js';
 
-export const getContactsController = async (req, res) => {
-    try {
+export const getContactsController = async (req, res, next) => {
         const data = await contactServices.getContacts();
 
         res.json({
@@ -9,31 +10,16 @@ export const getContactsController = async (req, res) => {
             message: 'Successfully found contacts!',
             data,
         });
-    }
-    catch (error) {
-        res.status(500).json({
-            status: 500,
-            message: error.message
-        })
-    }
     };
         
-export const getContactByIdController = async (req, res) => {
+export const getContactByIdController = async (req, res, next) => {
     const { contactId } = req.params;
-    if (contactId.length!==24) {
-        return res.status(404).json({
-            status: 404,
-            message: 'Contact ID must be a 24 character hex string',
-        });
-    }
+    if (contactId.length !== 24) { throw createHttpError(404, 'Contact ID must be a 24 character hex string'); }
+    
     const data = await contactServices.getContactById(contactId);
 
-    if (!data) {
-        return res.status(404).json({
-            status: 404,
-            message: 'Contact not found',
-        });
-    }
+    if (!data) { throw createHttpError(404, `Movie with id=${id} not found`); }
+    
     res.status(200).json({
         message: `Successfully found contact with id ${contactId}!`,
         data,
