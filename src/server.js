@@ -2,10 +2,12 @@
 // src/server.js
 
 import express from 'express';
-import pino from 'pino-http';
 import cors from 'cors';
 
 import { env } from "./utils/env.js";
+import { notFoundHandler } from './middlewares/notFoundHandler.js';
+import { errorHandler } from './middlewares/errorHandler.js';
+import { logger } from './middlewares/logger.js';
 
 import contactsRouter from "./routers/contacts.js"
 
@@ -13,28 +15,14 @@ export const setupServer = () => {
     const app = express();
 
     app.use(cors());
-    const logger = pino({
-        transport: {
-            target: "pino-pretty"
-        }
-    });
-    // app.use(logger);
+    
+    //app.use(logger);
 
     app.use('/contacts', contactsRouter);
 	
-    app.use((req, res) => {
-    res.status(404).json({
-        message: 'Not found',
-    });
-    });
+    app.use(notFoundHandler);
 
-    app.use((error, req, res, next) => {
-        const { status = 500, message = 'Sever ERROR' } = error;
-        res.status(500).json({
-            status,
-            message,
-        });
-    });
+    app.use(errorHandler);
 
 	const port = Number(env("PORT", 3000));
 	app.listen(port, () => console.log(`Server is running on ${port}`));
