@@ -12,10 +12,10 @@ contactsRouter.get('/:contactId', ctrlWrapper(contactsController.getContactByIdC
 
 contactsRouter.post('/', ctrlWrapper(contactsController.addContactsController));
 
-contactsRouter.put('/:contactId', ctrlWrapper(contactsController.upsertContactsController));
+contactsRouter.put('/:contactId', ctrlWrapper(contactsController.upsertContactController));
 
-contactsRouter.patch('/:contactId', ctrlWrapper(contactsController.patchContactsController));
+contactsRouter.patch('/:contactId', ctrlWrapper(contactsController.patchContactController));
 
-contactsRouter.delete('/:contactId', ctrlWrapper(contactsController.deleteContactsController));
+contactsRouter.delete('/:contactId', ctrlWrapper(contactsController.deleteContactController));
 
 export default contactsRouter;
