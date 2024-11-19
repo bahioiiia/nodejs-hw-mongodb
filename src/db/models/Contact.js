@@ -29,7 +29,22 @@ const contactSchema = new Schema({
     enum: typeList,
     default: 'personal',
   }  
-},{versionKey: false, timestamps: true});
+}, { versionKey: false, timestamps: true });
+
+//TODO lesson7 4.11 ~1:20
+/* contactsSchema.post("save", handleSaveError);
+
+contactsSchema.pre("findOneAndUpdate", setUpdateSettings);
+
+contactsSchema.post("findOneAndUpdate", handleSaveError); */
+
+export const sortByList = [
+    'name',
+    'phoneNumber',
+    'email',
+    'isFavourite',
+    'contactType',
+];
 
 const ContactCollection = model('contacts', contactSchema);
 
