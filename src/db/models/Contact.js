@@ -1,11 +1,6 @@
-/* name - string, required
-phoneNumber - string, required
-email - string
-isFavourite - boolean, default false
-contactType - string, enum(’work’, ‘home’, ‘personal’), required, default ‘personal’
- */
 import { Schema, model } from 'mongoose';
 import { typeList } from '../../constants/contacts.js';
+import { handleSaveError, setUpdateSettings } from "./hooks.js";
 
 const contactSchema = new Schema({
   name: {
@@ -32,11 +27,12 @@ const contactSchema = new Schema({
 }, { versionKey: false, timestamps: true });
 
 //TODO lesson7 4.11 ~1:20
-/* contactsSchema.post("save", handleSaveError);
+contactSchema.post("save", handleSaveError);
 
-contactsSchema.pre("findOneAndUpdate", setUpdateSettings);
+contactSchema.pre("findOneAndUpdate", setUpdateSettings);
 
-contactsSchema.post("findOneAndUpdate", handleSaveError); */
+contactSchema.post("findOneAndUpdate", handleSaveError);
+//todo
 
 export const sortByList = [
     'name',
