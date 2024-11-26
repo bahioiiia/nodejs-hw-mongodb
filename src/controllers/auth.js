@@ -12,7 +12,7 @@ export const registerController = async (req, res) => {
 };
 
 export const loginController = async (req, res) => {
-    /*     const {_id, accessToken, refreshToken, refreshTokenValidUntil} = await authServices.login(req.body);
+        const {_id, accessToken, refreshToken, refreshTokenValidUntil} = await authServices.login(req.body);
     
         res.cookie("refreshToken", refreshToken, {
             httpOnly: true,
@@ -30,7 +30,7 @@ export const loginController = async (req, res) => {
             data: {
                 accessToken,
             }
-        }); */
+        });
 };
 
 
