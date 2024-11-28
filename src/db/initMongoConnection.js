@@ -1,6 +1,3 @@
-//initMongoConnection
-// src/db/initMongoDB.js
-
 /* mongodb+srv://ivan:<db_password>@cluster0.x2ftn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0 */
 
 import mongoose from 'mongoose';
@@ -16,8 +13,8 @@ export const initMongoConnection = async () => {
 
     await mongoose.connect(`mongodb+srv://${user}:${pwd}@${url}/${db}?retryWrites=true&w=majority`,);
     console.log('MongoDB connection successfully established!');
-  } catch (e) {
+  } catch (error) {
     console.log(`Error while setting up mongo connection ${error.message}`);
-    throw e;
+    throw error;
   }
 };

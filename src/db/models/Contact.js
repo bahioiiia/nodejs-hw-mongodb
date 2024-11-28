@@ -23,7 +23,12 @@ const contactSchema = new Schema({
     required: true,
     enum: typeList,
     default: 'personal',
-  }  
+  },
+  userId: {
+    type: Schema.Types.ObjectId,
+    ref: "user",
+    required: true,
+  }
 }, { versionKey: false, timestamps: true });
 
 //TODO lesson7 4.11 ~1:20

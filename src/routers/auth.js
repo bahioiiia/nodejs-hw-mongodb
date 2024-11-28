@@ -12,23 +12,8 @@ authRouter.post("/register", validateBody(authRegisterSchema), ctrlWrapper(authC
 
 authRouter.post("/login", validateBody(authLoginSchema), ctrlWrapper(authControllers.loginController));
 
-/* authRouter.post(
-    '/register',
-    validateBody(authRegisterSchema),
-    ctrlWrapper(authControllers.registerController),
-);
+authRouter.post("/refresh", ctrlWrapper(authControllers.refreshSessionController),);
 
-authRouter.post(
-    '/login',
-    validateBody(authLoginSchema),
-    ctrlWrapper(authControllers.loginController),
-);
-
-authRouter.post(
-    '/refresh',
-    ctrlWrapper(authControllers.refreshSessionController),
-); */
-
-/* authRouter.post('/logout', ctrlWrapper(authControllers.logoutController)); */
+authRouter.post('/logout', ctrlWrapper(authControllers.logoutController));
 
 export default authRouter;

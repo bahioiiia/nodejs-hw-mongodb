@@ -6,8 +6,12 @@ import validateBody from "../utils/validateBody.js";
 
 import { contactAddSchema, contactUpdateSchema } from "../validation/contacts.js";
 import { isValidId } from '../middlewares/isValidId.js';
+import { authenticate } from "../middlewares/authenticate.js";
+
 
 const contactsRouter = Router();
+
+contactsRouter.use(authenticate);
 
 contactsRouter.get('/', ctrlWrapper(contactsController.getContactsController)); 
 
@@ -15,7 +19,7 @@ contactsRouter.get('/:contactId', isValidId, ctrlWrapper(contactsController.getC
 
 contactsRouter.post('/', validateBody(contactAddSchema), ctrlWrapper(contactsController.addContactsController));
 
-contactsRouter.put('/:contactId', isValidId, validateBody(contactAddSchema), ctrlWrapper(contactsController.upsertContactController));
+//contactsRouter.put('/:contactId', isValidId, validateBody(contactAddSchema), ctrlWrapper(contactsController.upsertContactController));
 
 contactsRouter.patch('/:contactId', isValidId, validateBody(contactUpdateSchema), ctrlWrapper(contactsController.patchContactController));
 
