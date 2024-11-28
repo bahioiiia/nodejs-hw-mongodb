@@ -19,7 +19,7 @@ contactsRouter.get('/:contactId', isValidId, ctrlWrapper(contactsController.getC
 
 contactsRouter.post('/', validateBody(contactAddSchema), ctrlWrapper(contactsController.addContactsController));
 
-//contactsRouter.put('/:contactId', isValidId, validateBody(contactAddSchema), ctrlWrapper(contactsController.upsertContactController));
+contactsRouter.put('/:contactId', isValidId, validateBody(contactAddSchema), ctrlWrapper(contactsController.upsertContactController));
 
 contactsRouter.patch('/:contactId', isValidId, validateBody(contactUpdateSchema), ctrlWrapper(contactsController.patchContactController));
 
