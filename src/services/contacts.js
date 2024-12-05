@@ -19,16 +19,16 @@ export const getContacts = async ({  page = 1,  perPage = 10,   sortBy = '_id', 
     return { data, ...paginationData };
 };
 
-export const getContactById = contactId => ContactCollection.findById(contactId);
+export const getContactById = (_id, userId) => ContactCollection.findOne({ _id, userId });
 
 export const addContact = payload => ContactCollection.create(payload);
 
-export const updateContact = async ({ _id, payload, options = {} }) => {
-    const rawResult = await ContactCollection.findOneAndUpdate({ _id }, payload, {
-        ...options,
-        new: true,
-        includeResultMetadata: true,
-    });
+export const updateContact = async (contactId, userId, payload, options = {}) => {
+    const rawResult = await ContactCollection.findOneAndUpdate(
+        { _id: contactId, userId },
+        payload,
+        { ...options, new: true, includeResultMetadata: true, });
+    //console.log("UPD serv",rawResult);
     if (!rawResult || !rawResult.value) return null;
     return {
         data: rawResult.value,
@@ -36,4 +36,4 @@ export const updateContact = async ({ _id, payload, options = {} }) => {
     };
 };
 
-export const deleteContact = async (filter) => ContactCollection.findOneAndDelete(filter);
+export const deleteContact = async (contactId, userId) => await ContactCollection.findOneAndDelete({ _id: contactId, userId });
