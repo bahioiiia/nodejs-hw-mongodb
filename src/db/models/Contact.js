@@ -28,7 +28,10 @@ const contactSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "user",
     required: true,
-  }
+  },
+  photo: {
+    type: String,
+  },
 }, { versionKey: false, timestamps: true });
 
 //TODO lesson7 4.11 ~1:20
