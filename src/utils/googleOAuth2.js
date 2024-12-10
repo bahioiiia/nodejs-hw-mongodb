@@ -33,12 +33,14 @@ export const validateCode = async (code) => {
     return ticket;
 };
 
-export const getFullNameFromGoogleTokenPayload = (payload) => {
-    let fullName = 'Guest';
-    if (payload.given_name && payload.family_name) {
-        fullName = `${payload.given_name} ${payload.family_name}`;
-    } else if (payload.given_name) {
-        fullName = payload.given_name;
+export const getUsernameFromGoogleTokenPayload = payload => {
+    if (payload.name) return payload.name;
+    let username = "";
+    if (payload.given_name) {
+        username += payload.given_name;
     }
-    return fullName;
+    if (payload.family_name) {
+        username += payload.given_name;
+    }
+    return username;
 };

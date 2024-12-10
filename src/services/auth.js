@@ -18,6 +18,7 @@ import handlebars from 'handlebars';
 import path from 'node:path';
 import fs from 'node:fs/promises';
 
+import { getUsernameFromGoogleTokenPayload, validateCode, } from '../utils/googleOAuth2.js';
 
 
 const createSession = () => {
@@ -125,4 +126,24 @@ export const resetPassword = async (payload) => {
     if (!user) { throw createHttpError(404, 'User not found'); };
     const encryptedPassword = await bcrypt.hash(payload.password, 10);
     await UserCollection.updateOne({ _id: user._id }, { password: encryptedPassword },);
+};
+/* GOOGLE OAUTH */
+export const loginOrSignupWithGoogle = async (code) => {
+    const loginTicket = await validateCode(code);
+    const payload = loginTicket.getPayload();
+    if (!payload) throw createHttpError(401);
+
+    let user = await UserCollection.findOne({ email: payload.email });
+    if (!user) {
+        const password = await bcrypt.hash(randomBytes(10), 10);
+        user = await UserCollection.create({
+            email: payload.email,
+            name: getUsernameFromGoogleTokenPayload(payload),
+            password,
+            role: 'parent',
+        });
+    }
+
+    const newSession = createSession();
+    return await SessionCollection.create({ userId: user._id, ...newSession, });
 };
