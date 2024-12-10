@@ -17,5 +17,9 @@ authRouter.post('/logout', ctrlWrapper(authControllers.logoutController));
 authRouter.post('/send-reset-email', validateBody(vldt.requestResetEmailSchema), ctrlWrapper(authControllers.requestResetEmailController),);
 
 authRouter.post('/reset-pwd', validateBody(vldt.resetPasswordSchema), ctrlWrapper(authControllers.resetPasswordController),);
+/* GOOGLE OAUTH */
+authRouter.get('/get-oauth-url', ctrlWrapper(authControllers.getGoogleOAuthUrlController),);
+
+authRouter.post('/confirm-oauth',validateBody(vldt.loginWithGoogleOAuthSchema),ctrlWrapper(authControllers.loginWithGoogleController),);
 
 export default authRouter;
